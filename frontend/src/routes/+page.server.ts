@@ -17,14 +17,12 @@ export const actions = {
 	addFood: async (event) => {
 		const form = await superValidate(event, zod(newFoodFormSchema));
 		const { food, date } = form.data;
-		console.log(`Adding food: ${food} on ${date}`);
 		await addEatenFood(food, date);
 	},
 
 	deleteFood: async (event) => {
 		const form = await superValidate(event, zod(newFoodFormSchema));
 		const { id } = form.data;
-
 		await deleteEatenFood(id);
 	}
 } satisfies Actions;

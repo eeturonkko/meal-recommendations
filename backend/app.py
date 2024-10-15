@@ -95,17 +95,20 @@ def delete_all_foods():
 @app.route("/delete_food_by_id", methods=["DELETE"])
 def delete_food_by_id():
     data = request.get_json()
+    print("Received data for deletion:", data)  # Log the data to check what is received
+
     food_id = data.get("id")
     
     if not food_id:
         return jsonify({"error": "Missing id"}), 400
-      
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM foods WHERE id=?", (food_id,))
     conn.commit()
     conn.close()
     return jsonify({"message": "Food entry deleted successfully"}), 200
+
   
 if __name__ == "__main__":
     app.run(debug=True)

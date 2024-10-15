@@ -16,17 +16,13 @@
 	}
 
 	export let data: PageData;
-
-	const foods: Food[] = data.foods;
-	const recommendedFoods: RecommendedFood[] = data.recommendedFoods;
-
-	$: eatenFoods = foods;
-	$: recommendedEatenFoods = recommendedFoods;
+	$: foods = data.foods as Food[];
+	$: recommendedFoods = data.recommendedFoods as RecommendedFood[];
 </script>
 
 <main class="container">
 	<h1>Mitä tänään syötäisiin?</h1>
-	<button class="dialog-open-btn" on:click={showModal}>Lisää ruoka</button>
+	<button class="dialog-open-btn" onclick={showModal}>Lisää ruoka</button>
 	<dialog bind:this={dialog}>
 		<p>Lisää ruoka</p>
 		<form action="?/addFood" method="POST" use:enhance>
@@ -36,17 +32,17 @@
 			<input type="date" name="date" id="date" />
 			<div class="dialog-form-btn-group">
 				<button type="submit">Lisää</button>
-				<button on:click={closeModal}>Peruuta</button>
+				<button onclick={closeModal}>Peruuta</button>
 			</div>
 		</form>
 	</dialog>
 	<h2 class="text-green">Kaikki ruuat</h2>
 	<ul>
-		{#each eatenFoods as food}
+		{#each foods as food}
 			<div class="food-item">
 				<li>{food.food_name} - Syöty {food.eaten_date}</li>
 				<form method="POST" action="?/deleteFood" use:enhance>
-					<input type="hidden" name="deleteFood" value={food.id} />
+					<input type="hidden" name="id" value={food.id} />
 					<button type="submit">X</button>
 				</form>
 			</div>
@@ -55,7 +51,7 @@
 
 	<h2>Ruokavinkit</h2>
 	<ul>
-		{#each recommendedEatenFoods as food}
+		{#each recommendedFoods as food}
 			<li>{food.food_name} - Viimeksi syöty {food.last_eaten_date}</li>
 		{/each}
 	</ul>

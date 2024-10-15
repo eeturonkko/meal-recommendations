@@ -24,7 +24,7 @@ export async function addEatenFood(food: string, date: string): Promise<void> {
 
 export async function deleteEatenFood(id: number): Promise<void> {
 	await fetch('http://localhost:5000/delete_food_by_id', {
-		method: 'POST',
+		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json'
 		},
