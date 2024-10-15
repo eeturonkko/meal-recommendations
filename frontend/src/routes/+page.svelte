@@ -15,6 +15,12 @@
 		dialog.close();
 	}
 
+	//TODO: Why is this not reactive?
+	/*   export { data } = $props();
+  let foods = $state(data.foods as Food[]);
+  let recommendedFoods = $state(data.recommendedFoods as RecommendedFood[]);
+ */
+
 	export let data: PageData;
 	$: foods = data.foods as Food[];
 	$: recommendedFoods = data.recommendedFoods as RecommendedFood[];
@@ -27,9 +33,9 @@
 		<p>Lisää ruoka</p>
 		<form action="?/addFood" method="POST" use:enhance>
 			<label for="food">Ruoka</label>
-			<input placeholder="Ruoka" type="text" name="food" id="food" />
+			<input placeholder="Ruoka" type="text" name="food" id="food" required />
 			<label for="date">Pvm</label>
-			<input type="date" name="date" id="date" />
+			<input type="date" name="date" id="date" required />
 			<div class="dialog-form-btn-group">
 				<button type="submit">Lisää</button>
 				<button onclick={closeModal}>Peruuta</button>
