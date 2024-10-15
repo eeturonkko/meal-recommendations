@@ -21,3 +21,13 @@ export async function addEatenFood(food: string, date: string): Promise<void> {
 		body: JSON.stringify({ food_name: food, eaten_date: date })
 	});
 }
+
+export async function deleteEatenFood(id: number): Promise<void> {
+	await fetch('http://localhost:5000/delete_food_by_id', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ id })
+	});
+}

@@ -81,5 +81,31 @@ def all_foods():
 
     return jsonify({"all_foods": all_foods}), 200
 
+@app.route("/delete_all_foods", methods=["DELETE"])
+def delete_all_foods():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM foods")
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "All food entries deleted successfully"}), 200
+  
+@app.route("/delete_food_by_id", methods=["DELETE"])
+def delete_food_by_id():
+    data = request.get_json()
+    food_id = data.get("id")
+    
+    if not food_id:
+        return jsonify({"error": "Missing id"}), 400
+      
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM foods WHERE id=?", (food_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Food entry deleted successfully"}), 200
+  
 if __name__ == "__main__":
     app.run(debug=True)

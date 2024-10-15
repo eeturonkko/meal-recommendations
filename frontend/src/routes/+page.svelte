@@ -1,10 +1,7 @@
 <script lang="ts">
-	export let data: PageData;
-	const foods: Food[] = data.foods;
 	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
 	import type { Food, RecommendedFood } from '$lib/types';
-	const recommendedFoods: RecommendedFood[] = data.recommendedFoods;
 
 	let dialog: HTMLDialogElement | null;
 
@@ -17,6 +14,14 @@
 		if (!dialog) return;
 		dialog.close();
 	}
+
+	export let data: PageData;
+
+	const foods: Food[] = data.foods;
+	const recommendedFoods: RecommendedFood[] = data.recommendedFoods;
+
+	$: eatenFoods = foods;
+	$: recommendedEatenFoods = recommendedFoods;
 </script>
 
 <main class="container">
@@ -37,14 +42,20 @@
 	</dialog>
 	<h2 class="text-green">Kaikki ruuat</h2>
 	<ul>
-		{#each foods as food}
-			<li>{food.food_name} - Syöty {food.eaten_date}</li>
+		{#each eatenFoods as food}
+			<div class="food-item">
+				<li>{food.food_name} - Syöty {food.eaten_date}</li>
+				<form method="POST" action="?/deleteFood" use:enhance>
+					<input type="hidden" name="deleteFood" value={food.id} />
+					<button type="submit">X</button>
+				</form>
+			</div>
 		{/each}
 	</ul>
 
 	<h2>Ruokavinkit</h2>
 	<ul>
-		{#each recommendedFoods as food}
+		{#each recommendedEatenFoods as food}
 			<li>{food.food_name} - Viimeksi syöty {food.last_eaten_date}</li>
 		{/each}
 	</ul>
