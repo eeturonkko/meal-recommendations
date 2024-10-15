@@ -10,12 +10,13 @@
 h1 {
 	font-size: 33px;
 	color: #2c7a7b;
-	margin-bottom: 40px;
+	margin-bottom: 10px;
 }
 
 h2 {
 	font-size: 24px;
 	color: #2c7a7b;
+	margin-top: 10px;
 	margin-bottom: 20px;
 }
 
@@ -43,4 +44,91 @@ li:nth-child(odd) {
 
 .text-green {
 	color: #38a169;
+}
+
+dialog {
+	width: 100%;
+	max-width: 400px;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	padding: 20px;
+	position: fixed;
+	top: 35%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: left;
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #2c7a7b;
+	margin-bottom: 20px;
+}
+
+dialog label {
+	display: block;
+	font-size: 16px;
+	margin-bottom: 8px;
+	color: #2c7a7b;
+}
+
+dialog input[type='text'],
+dialog input[type='date'] {
+	width: calc(100% - 20px);
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #cbd5e0;
+	border-radius: 6px;
+	box-sizing: border-box;
+}
+
+dialog form {
+	display: flex;
+	flex-direction: column;
+}
+
+dialog button {
+	background-color: #38a169;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	width: 100%;
+	font-weight: 600;
+}
+
+dialog button:hover {
+	background-color: #2f855a;
+}
+
+.dialog-form-btn-group {
+	display: flex;
+	justify-content: space-evenly;
+	gap: 5px;
+	font-weight: 600;
+}
+
+.dialog-open-btn {
+	background-color: #38a169;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	width: 100%;
+	font-weight: 600;
+}
+
+.dialog-open-btn:hover {
+	background-color: #2f855a;
 }
