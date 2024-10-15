@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import type { Food, RecommendedFood } from '$lib/types';
 	export let data: PageData;
 	const foods: Food[] = data.foods;
+	import { enhance } from '$app/forms';
+	import type { PageData } from './$types';
+	import type { Food, RecommendedFood } from '$lib/types';
 	const recommendedFoods: RecommendedFood[] = data.recommendedFoods;
 
 	let dialog: HTMLDialogElement | null;
@@ -23,7 +24,7 @@
 	<button class="dialog-open-btn" on:click={showModal}>Lisää ruoka</button>
 	<dialog bind:this={dialog}>
 		<p>Lisää ruoka</p>
-		<form action="/?addFood" method="dialog">
+		<form action="?/addFood" method="POST" use:enhance>
 			<label for="food">Ruoka</label>
 			<input placeholder="Ruoka" type="text" name="food" id="food" />
 			<label for="date">Pvm</label>

@@ -11,3 +11,13 @@ export async function getRecommendedFoods(): Promise<RecommendedFood[]> {
 	const data: RecommendedFoodsResponse = await res.json();
 	return data.recommendations;
 }
+
+export async function addEatenFood(food: string, date: string): Promise<void> {
+	await fetch('http://localhost:5000/add_food', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ food_name: food, eaten_date: date })
+	});
+}
