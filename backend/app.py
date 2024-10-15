@@ -95,8 +95,6 @@ def delete_all_foods():
 @app.route("/delete_food_by_id", methods=["DELETE"])
 def delete_food_by_id():
     data = request.get_json()
-    print("Received data for deletion:", data)  # Log the data to check what is received
-
     food_id = data.get("id")
     
     if not food_id:
