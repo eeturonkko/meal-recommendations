@@ -37,7 +37,7 @@
 			<label for="date">Pvm</label>
 			<input type="date" name="date" id="date" required />
 			<div class="dialog-form-btn-group">
-				<button type="submit">Lisää</button>
+				<button type="submit" onclick={closeModal}>Lisää</button>
 				<button onclick={closeModal}>Peruuta</button>
 			</div>
 		</form>
