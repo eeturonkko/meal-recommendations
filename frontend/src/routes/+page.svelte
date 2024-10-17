@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageData } from './$types';
-	import type { Food, RecommendedFood } from '$lib/types';
 
 	let dialog: HTMLDialogElement | null;
 
@@ -15,8 +13,7 @@
 		dialog.close();
 	}
 
-	export let data: PageData;
-	$: recommendedFoods = data.recommendedFoods as RecommendedFood[];
+	let { data } = $props();
 </script>
 
 <main class="container">
@@ -38,10 +35,10 @@
 
 	<!-- <h2 class="text-green">Kaikki ruuat</h2>
 	<ul>
-		{#if foods.length === 0}
+		{#if data.foods.length === 0}
 			<p>Ei syötyjä ruokia</p>
 		{/if}
-		{#each foods as food}
+		{#each data.foods as food}
 			<li class="food-item">
 				<span>{food.food_name} - Syöty {food.eaten_date}</span>
 				<form method="POST" action="?/deleteFood" use:enhance>
@@ -54,10 +51,10 @@
 
 	<h2>Ruokavinkit</h2>
 	<ul>
-		{#if recommendedFoods.length === 0}
+		{#if data.recommendedFoods.length === 0}
 			<p>Ei suosituksia</p>
 		{/if}
-		{#each recommendedFoods as food}
+		{#each data.recommendedFoods as food}
 			<li>{food.food_name} - Viimeksi syöty {food.last_eaten_date}</li>
 		{/each}
 	</ul>
@@ -110,10 +107,6 @@
 
 	li:nth-child(odd) {
 		background-color: #f7fafc;
-	}
-
-	.text-green {
-		color: #38a169;
 	}
 
 	dialog {

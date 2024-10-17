@@ -20,6 +20,12 @@ def init_db():
             eaten_date DATE NOT NULL
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS meals (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            meal_name TEXT NOT NULL
+        )
+    """)
     conn.commit()
     conn.close()
 
@@ -106,6 +112,35 @@ def delete_food_by_id():
     conn.commit()
     conn.close()
     return jsonify({"message": "Food entry deleted successfully"}), 200
+  
+@app.route("/all_meals", methods=["GET"])
+def get_all_meals():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM meals")
+    meals = cursor.fetchall()
+    conn.close()
+
+    all_meals = [dict(meal) for meal in meals]
+
+    return jsonify({"all_meals": all_meals}), 200
+  
+@app.route("/add_meal", methods=["POST"])
+def add_meal():
+    data = request.get_json()
+    meal_name = data.get("meal_name")
+
+    if not meal_name:
+        return jsonify({"error": "Missing meal_name"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO meals (meal_name) VALUES (?)",
+                   (meal_name,))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Meal added successfully"}), 201
 
   
 if __name__ == "__main__":

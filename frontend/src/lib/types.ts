@@ -20,3 +20,8 @@ export interface AllFoodsResponse {
 export interface RecommendedFoodsResponse {
 	recommendations: RecommendedFood[];
 }
+
+export interface Meal {
+	id: number;
+	meal_name: string;
+}

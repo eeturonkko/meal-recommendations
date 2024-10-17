@@ -1,4 +1,10 @@
-import type { Food, RecommendedFood, AllFoodsResponse, RecommendedFoodsResponse } from '$lib/types';
+import type {
+	Food,
+	RecommendedFood,
+	AllFoodsResponse,
+	RecommendedFoodsResponse,
+	Meal
+} from '$lib/types';
 
 export async function getAllFoods(): Promise<Food[]> {
 	const res = await fetch('http://localhost:5000/all_foods');
@@ -47,5 +53,30 @@ export async function deleteEatenFood(id: number): Promise<void> {
 	if (!res.ok) {
 		const errorData = await res.json();
 		throw new Error(errorData.message || 'Failed to delete eaten food');
+	}
+}
+
+export async function getAllMeals(): Promise<Meal[]> {
+	const res = await fetch('http://localhost:5000/all_meals');
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.message || 'Failed to fetch all meals');
+	}
+	const data: { all_meals: Meal[] } = await res.json();
+	return data.all_meals;
+}
+
+export async function addMeal(meal: string): Promise<void> {
+	const res = await fetch('http://localhost:5000/add_meal', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ meal_name: meal })
+	});
+
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.message || 'Failed to add meal');
 	}
 }

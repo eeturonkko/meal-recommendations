@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageData } from './$types';
 
 	let dialog: HTMLDialogElement | null;
 
@@ -13,6 +12,8 @@
 		if (!dialog) return;
 		dialog.close();
 	}
+
+	let { data } = $props();
 </script>
 
 <main class="container">
@@ -20,10 +21,9 @@
 	<button class="dialog-open-btn" onclick={showModal}>Lisää ruoka</button>
 	<dialog bind:this={dialog}>
 		<p>Lisää ruoka tietokantaan</p>
-		<form action="" method="POST" use:enhance>
-			<label for="">Ruoka</label>
-			<input placeholder="Ruoka" type="text" name="" id="" required />
-
+		<form action="?/addMeal" method="POST" use:enhance>
+			<label for="meal">Ruoka</label>
+			<input placeholder="Ruoka" type="text" name="meal" id="meal" required />
 			<div class="dialog-form-btn-group">
 				<button type="submit" onclick={closeModal}>Lisää</button>
 				<button onclick={closeModal}>Peruuta</button>
@@ -32,21 +32,34 @@
 	</dialog>
 
 	<h2 class="text-green">Kaikki ruoat</h2>
-	<ul>
-		<!-- {#if foods.length === 0}
-			<p>Ei syötyjä ruokia</p>
-		{/if}
-		{#each foods as food}
-			<li class="food-item">
-				<span>{food.food_name} - Syöty {food.eaten_date}</span>
-				<form method="POST" action="?/deleteFood" use:enhance>
-					<input type="hidden" name="id" value={food.id} />
-					<button class="delete-btn" type="submit">X</button>
-				</form>
-			</li>
-		{/each} -->
-		<p>Ruuat tulee tähän</p>
-	</ul>
+
+	{#if data.meals.length === 0}
+		<p>Ei syötyjä ruokia</p>
+	{/if}
+
+	{#if data.meals.length > 0}
+		<table class="meals-table">
+			<thead>
+				<tr>
+					<th>Ruoka</th>
+					<th>Toiminnot</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each data.meals as meal}
+					<tr>
+						<td>{meal.meal_name}</td>
+						<td>
+							<form method="POST" action="?/deleteMeal" use:enhance>
+								<input type="hidden" name="id" value={meal.id} />
+								<button class="delete-btn" type="submit">Poista</button>
+							</form>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	{/if}
 
 	<a href="/" class="view-foods-link">Takaisin</a>
 </main>
@@ -75,31 +88,67 @@
 		margin: 30px 0 20px;
 	}
 
-	ul {
-		list-style: none;
-		padding-left: 0;
-		margin-bottom: 30px;
+	.meals-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 20px;
 	}
 
-	li {
-		background-color: #edf2f7;
-		margin: 10px 0;
-		padding: 15px;
-		border-radius: 8px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		transition:
-			background-color 0.3s ease,
-			transform 0.2s ease;
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	.meals-table thead {
+		background-color: #2c7a7b;
+		color: white;
 	}
 
-	li:nth-child(odd) {
+	.meals-table th,
+	.meals-table td {
+		padding: 12px 15px;
+		border: 1px solid #e2e8f0;
+		text-align: left;
+	}
+
+	.meals-table tbody tr:nth-child(even) {
 		background-color: #f7fafc;
 	}
 
-	.text-green {
+	.meals-table tbody tr:hover {
+		background-color: #e2e8f0;
+	}
+
+	.dialog-open-btn {
+		background-color: #38a169;
+		color: white;
+		border: none;
+		padding: 12px;
+		border-radius: 8px;
+		cursor: pointer;
+		transition:
+			background-color 0.3s ease,
+			transform 0.2s ease;
+		width: 100%;
+		font-weight: 600;
+		margin-bottom: 20px;
+	}
+
+	.delete-btn {
+		background-color: #e53e3e;
+		color: white;
+		border: none;
+		padding: 7px;
+		border-radius: 8px;
+		cursor: pointer;
+		font-weight: 600;
+	}
+
+	.view-foods-link {
+		display: block;
+		margin-top: 20px;
+		color: #2c7a7b;
+		text-decoration: underline;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.view-foods-link:hover {
 		color: #38a169;
 	}
 
@@ -144,7 +193,6 @@
 		border-radius: 8px;
 		box-sizing: border-box;
 	}
-
 	dialog form {
 		display: flex;
 		flex-direction: column;
@@ -184,31 +232,5 @@
 		width: 100%;
 		font-weight: 600;
 		margin-bottom: 20px;
-	}
-
-	.delete-btn {
-		background-color: #e53e3e;
-		color: white;
-		border: none;
-		padding: 10px;
-		border-radius: 8px;
-		cursor: pointer;
-		transition:
-			background-color 0.3s ease,
-			transform 0.2s ease;
-		font-weight: 600;
-	}
-
-	.view-foods-link {
-		display: block;
-		margin-top: 20px;
-		color: #2c7a7b;
-		text-decoration: underline;
-		font-size: 16px;
-		font-weight: bold;
-	}
-
-	.view-foods-link:hover {
-		color: #38a169;
 	}
 </style>
