@@ -86,6 +86,9 @@ def all_foods():
     cursor.execute("SELECT * FROM foods")
     foods = cursor.fetchall()
     conn.close()
+    
+    if not foods:
+        return jsonify({"error": "No food entries found"}), 404
 
     all_foods = [dict(food) for food in foods]
 
@@ -99,6 +102,9 @@ def last_five_foods():
     cursor.execute("SELECT * FROM foods ORDER BY eaten_date DESC LIMIT 5")
     foods = cursor.fetchall()
     conn.close()
+    
+    if not foods:
+        return jsonify({"error": "No food entries found"}), 404
 
     last_five_foods = [dict(food) for food in foods]
   
@@ -129,6 +135,7 @@ def delete_food_by_id():
     cursor.execute("DELETE FROM foods WHERE id=?", (food_id,))
     conn.commit()
     conn.close()
+    
     return jsonify({"message": "Food entry deleted successfully"}), 200
   
 """MEAL API ROUTES """
@@ -141,6 +148,9 @@ def get_all_meals():
     cursor.execute("SELECT * FROM meals")
     meals = cursor.fetchall()
     conn.close()
+    
+    if not meals:
+        return jsonify({"error": "No meal entries found"}), 404
 
     all_meals = [dict(meal) for meal in meals]
 
