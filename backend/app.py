@@ -141,7 +141,21 @@ def add_meal():
     conn.commit()
     conn.close()
     return jsonify({"message": "Meal added successfully"}), 201
+  
+@app.route("/delete_meal_by_id", methods=["DELETE"])
+def delete_meal_by_id():
+    data = request.get_json()
+    meal_id = data.get("id")
+    
+    if not meal_id:
+        return jsonify({"error": "Missing id"}), 400
 
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM meals WHERE id=?", (meal_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Meal deleted successfully"}), 200
   
 if __name__ == "__main__":
     app.run(debug=True)

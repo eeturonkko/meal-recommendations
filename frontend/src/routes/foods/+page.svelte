@@ -34,7 +34,7 @@
 	<h2 class="text-green">Kaikki ruoat</h2>
 
 	{#if data.meals.length === 0}
-		<p>Ei syötyjä ruokia</p>
+		<p>Ei ruokia</p>
 	{/if}
 
 	{#if data.meals.length > 0}

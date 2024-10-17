@@ -80,3 +80,18 @@ export async function addMeal(meal: string): Promise<void> {
 		throw new Error(errorData.message || 'Failed to add meal');
 	}
 }
+
+export async function deleteMeal(id: number): Promise<void> {
+	const res = await fetch('http://localhost:5000/delete_meal_by_id', {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ id })
+	});
+
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.message || 'Failed to delete meal');
+	}
+}
