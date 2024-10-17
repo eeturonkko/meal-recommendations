@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
-	import type { Food, RecommendedFood } from '$lib/types';
 
 	let dialog: HTMLDialogElement | null;
 
@@ -14,21 +13,17 @@
 		if (!dialog) return;
 		dialog.close();
 	}
-
-	export let data: PageData;
-	$: recommendedFoods = data.recommendedFoods as RecommendedFood[];
 </script>
 
 <main class="container">
 	<h1>Mitä tänään syötäisiin?</h1>
 	<button class="dialog-open-btn" onclick={showModal}>Lisää ruoka</button>
 	<dialog bind:this={dialog}>
-		<p>Lisää ruoka</p>
-		<form action="?/addFood" method="POST" use:enhance>
-			<label for="food">Ruoka</label>
-			<input placeholder="Ruoka" type="text" name="food" id="food" required />
-			<label for="date">Pvm</label>
-			<input type="date" name="date" id="date" required />
+		<p>Lisää ruoka tietokantaan</p>
+		<form action="" method="POST" use:enhance>
+			<label for="">Ruoka</label>
+			<input placeholder="Ruoka" type="text" name="" id="" required />
+
 			<div class="dialog-form-btn-group">
 				<button type="submit" onclick={closeModal}>Lisää</button>
 				<button onclick={closeModal}>Peruuta</button>
@@ -36,9 +31,9 @@
 		</form>
 	</dialog>
 
-	<!-- <h2 class="text-green">Kaikki ruuat</h2>
+	<h2 class="text-green">Kaikki ruoat</h2>
 	<ul>
-		{#if foods.length === 0}
+		<!-- {#if foods.length === 0}
 			<p>Ei syötyjä ruokia</p>
 		{/if}
 		{#each foods as food}
@@ -49,19 +44,11 @@
 					<button class="delete-btn" type="submit">X</button>
 				</form>
 			</li>
-		{/each}
-	</ul> -->
-
-	<h2>Ruokavinkit</h2>
-	<ul>
-		{#if recommendedFoods.length === 0}
-			<p>Ei suosituksia</p>
-		{/if}
-		{#each recommendedFoods as food}
-			<li>{food.food_name} - Viimeksi syöty {food.last_eaten_date}</li>
-		{/each}
+		{/each} -->
+		<p>Ruuat tulee tähän</p>
 	</ul>
-	<a href="/foods" class="view-foods-link">Katso kaikki ruoat</a>
+
+	<a href="/" class="view-foods-link">Takaisin</a>
 </main>
 
 <style>
@@ -149,8 +136,7 @@
 		color: #2c7a7b;
 	}
 
-	dialog input[type='text'],
-	dialog input[type='date'] {
+	dialog input[type='text'] {
 		width: calc(100% - 20px);
 		padding: 12px;
 		margin-bottom: 20px;
