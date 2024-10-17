@@ -2,6 +2,7 @@ import type { Food, RecommendedFood, Meal } from '$lib/types';
 import { expect, test, vi, beforeEach, afterEach } from 'vitest';
 import {
 	getAllFoods,
+	getLastFiveFoods,
 	getRecommendedFoods,
 	addEatenFood,
 	deleteEatenFood,
@@ -12,7 +13,15 @@ import {
 
 const mockAllFoods: Food[] = [
 	{ id: 1, food_name: 'Apple', eaten_date: '2024-10-16' },
-	{ id: 2, food_name: 'Banana', eaten_date: '2024-10-17' }
+	{ id: 2, food_name: 'Banana', eaten_date: '2024-10-17' },
+	{ id: 3, food_name: 'Carrot', eaten_date: '2024-10-18' },
+	{ id: 4, food_name: 'Date', eaten_date: '2024-10-19' },
+	{ id: 5, food_name: 'Eggplant', eaten_date: '2024-10-20' },
+	{ id: 6, food_name: 'Fennel', eaten_date: '2024-10-21' },
+	{ id: 7, food_name: 'Grape', eaten_date: '2024-10-22' },
+	{ id: 8, food_name: 'Honey', eaten_date: '2024-10-23' },
+	{ id: 9, food_name: 'Iceberg lettuce', eaten_date: '2024-10-24' },
+	{ id: 10, food_name: 'Jalapeno', eaten_date: '2024-10-25' }
 ];
 
 const mockRecommendedFoods: RecommendedFood[] = [
@@ -55,6 +64,28 @@ test('getAllFoods handles fetch errors', async () => {
 
 	await expect(getAllFoods()).rejects.toThrow('Network Error');
 	expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:5000/all_foods');
+});
+
+test('getLastFiveFoods fetches the correct data', async () => {
+	mockFetch.mockResolvedValueOnce({
+		ok: true,
+		json: async () => ({ all_foods: mockAllFoods.slice(0, 5) })
+	});
+
+	const foods = await getLastFiveFoods();
+	expect(foods).toEqual(mockAllFoods.slice(0, 5));
+	expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:5000/last_five_foods');
+});
+
+test('getLastFiveFoods handles fetch errors', async () => {
+	mockFetch.mockResolvedValueOnce({
+		ok: false,
+		status: 500,
+		json: async () => ({ message: 'Internal Server Error' })
+	});
+
+	await expect(getLastFiveFoods()).rejects.toThrow('Internal Server Error');
+	expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:5000/last_five_foods');
 });
 
 test('getRecommendedFoods fetches the correct data', async () => {

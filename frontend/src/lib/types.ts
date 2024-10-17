@@ -16,6 +16,10 @@ export interface AllFoodsResponse {
 	all_foods: Food[];
 }
 
+export interface LastFiveFoodsResponse {
+	last_five_foods: Food[];
+}
+
 /** Interface representing the response from the 'recommendations' endpoint */
 export interface RecommendedFoodsResponse {
 	recommendations: RecommendedFood[];

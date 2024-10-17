@@ -2,6 +2,7 @@ import type {
 	Food,
 	RecommendedFood,
 	AllFoodsResponse,
+	LastFiveFoodsResponse,
 	RecommendedFoodsResponse,
 	Meal
 } from '$lib/types';
@@ -14,6 +15,16 @@ export async function getAllFoods(): Promise<Food[]> {
 	}
 	const data: AllFoodsResponse = await res.json();
 	return data.all_foods;
+}
+
+export async function getLastFiveFoods(): Promise<Food[]> {
+	const res = await fetch('http://localhost:5000/last_five_foods');
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new Error(errorData.message || 'Failed to fetch last five foods');
+	}
+	const data: LastFiveFoodsResponse = await res.json();
+	return data.last_five_foods;
 }
 
 export async function getRecommendedFoods(): Promise<RecommendedFood[]> {

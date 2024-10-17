@@ -86,6 +86,20 @@ def all_foods():
     all_foods = [dict(food) for food in foods]
 
     return jsonify({"all_foods": all_foods}), 200
+  
+@app.route("/last_five_foods", methods=["GET"])
+def last_five_foods():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM foods ORDER BY eaten_date DESC LIMIT 5")
+    foods = cursor.fetchall()
+    conn.close()
+
+    last_five_foods = [dict(food) for food in foods]
+  
+
+    return jsonify({"last_five_foods": last_five_foods}), 200
 
 @app.route("/delete_all_foods", methods=["DELETE"])
 def delete_all_foods():

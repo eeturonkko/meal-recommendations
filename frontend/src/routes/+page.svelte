@@ -33,12 +33,12 @@
 		</form>
 	</dialog>
 
-	<!-- <h2 class="text-green">Kaikki ruuat</h2>
+	<h2 class="text-green">Viimeiset viisi ruokaa</h2>
 	<ul>
-		{#if data.foods.length === 0}
+		{#if data.lastFiveFoods.length === 0}
 			<p>Ei syötyjä ruokia</p>
 		{/if}
-		{#each data.foods as food}
+		{#each data.lastFiveFoods as food}
 			<li class="food-item">
 				<span>{food.food_name} - Syöty {food.eaten_date}</span>
 				<form method="POST" action="?/deleteFood" use:enhance>
@@ -47,7 +47,7 @@
 				</form>
 			</li>
 		{/each}
-	</ul> -->
+	</ul>
 
 	<h2>Ruokavinkit</h2>
 	<ul>
