@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 DATABASE = "foods.db"
 
+""" DB INITIALIZATION AND HELPER FUNCTIONS """
+
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
@@ -30,6 +32,8 @@ def init_db():
     conn.close()
 
 init_db()
+
+"""FOOD API ROUTES """
 
 @app.route("/add_food", methods=["POST"])
 def add_food():
@@ -126,6 +130,8 @@ def delete_food_by_id():
     conn.commit()
     conn.close()
     return jsonify({"message": "Food entry deleted successfully"}), 200
+  
+"""MEAL API ROUTES """
   
 @app.route("/all_meals", methods=["GET"])
 def get_all_meals():
