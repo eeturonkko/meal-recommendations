@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { formatDate } from '$lib/functions.js';
 
 	let dialog: HTMLDialogElement | null;
 
@@ -40,7 +41,7 @@
 		{/if}
 		{#each data.lastFiveFoods as food}
 			<li class="food-item">
-				<span>{food.food_name} - Syöty {food.eaten_date}</span>
+				<span>{food.food_name} {formatDate(food.eaten_date)}</span>
 				<form method="POST" action="?/deleteFood" use:enhance>
 					<input type="hidden" name="id" value={food.id} />
 					<button class="delete-btn" type="submit">X</button>

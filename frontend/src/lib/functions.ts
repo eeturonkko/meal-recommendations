@@ -106,3 +106,7 @@ export async function deleteMeal(id: number): Promise<void> {
 		throw new Error(errorData.message || 'Failed to delete meal');
 	}
 }
+
+export function formatDate(date: string) {
+	return new Date(date).toLocaleDateString('fi-FI');
+}
