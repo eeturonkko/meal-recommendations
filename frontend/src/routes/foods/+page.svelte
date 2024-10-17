@@ -18,7 +18,7 @@
 
 <main class="container">
 	<h1>Mitä tänään syötäisiin?</h1>
-	<button class="dialog-open-btn" onclick={showModal}>Lisää ruoka</button>
+	<button class="dialog-open-btn" onclick={showModal}>Lisää ruoka tietokantaan</button>
 	<dialog bind:this={dialog}>
 		<p>Lisää ruoka tietokantaan</p>
 		<form action="?/addMeal" method="POST" use:enhance>
@@ -66,7 +66,7 @@
 
 <style>
 	.container {
-		max-width: 800px;
+		width: 600px;
 		background-color: #ffffff;
 		border-radius: 10px;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
