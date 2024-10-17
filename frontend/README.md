@@ -1,38 +1,24 @@
-# create-svelte
+# Meal Recommendations App
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This application allows users to track meals they have eaten and provides meal recommendations based on meals they haven't had in the past 14 days. Additionally, users can manage their favorite meals by adding them to a personal food database for easy reference.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Meal Tracking**: Users can log the meals they eat, with the app keeping a history of their eating habits.
+- **Meal Recommendations**: The app suggests meals users haven't eaten in the past 14 days.
+- **Favorite Foods Database**: Add meals to your personal favorites for quick access.
+- **User-Friendly Interface**: Built with SvelteKit, providing a smooth and responsive UI experience.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Technology Stack
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **Frontend**: [SvelteKit](https://kit.svelte.dev/), for building the interactive user interface.
+- **Backend**: [Flask](https://flask.palletsprojects.com/), for managing server-side logic.
+- **Database**: [SQLite](https://www.sqlite.org/index.html), a lightweight relational database for meal data storage.
+- **Unit Testing**: [Vitest](https://vitest.dev/), for testing the application to ensure correctness and stability.
 
-## Developing
+## Installation
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Prerequisites
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Ensure you have [Node.js](https://nodejs.org/) and [Python](https://www.python.org/) installed on your system.
+- Install [SvelteKit](https://kit.svelte.dev/docs#installation) and [Flask](https://flask.palletsprojects.com/en/latest/installation/) for frontend and backend respectively.
