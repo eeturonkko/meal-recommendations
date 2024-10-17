@@ -69,7 +69,7 @@ test('getAllFoods handles fetch errors', async () => {
 test('getLastFiveFoods fetches the correct data', async () => {
 	mockFetch.mockResolvedValueOnce({
 		ok: true,
-		json: async () => ({ all_foods: mockAllFoods.slice(0, 5) })
+		json: async () => ({ last_five_foods: mockAllFoods.slice(0, 5) })
 	});
 
 	const foods = await getLastFiveFoods();
