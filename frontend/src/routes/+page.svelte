@@ -15,6 +15,7 @@
 	}
 
 	let { data } = $props();
+	console.log(data.foods);
 </script>
 
 <main class="container">

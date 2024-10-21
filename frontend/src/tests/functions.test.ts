@@ -5,6 +5,7 @@ import {
 	getLastFiveFoods,
 	getRecommendedFoods,
 	addEatenFood,
+	updateEatenFood,
 	deleteEatenFood,
 	getAllMeals,
 	addMeal,
@@ -137,6 +138,36 @@ test('addEatenFood handles server errors', async () => {
 	await expect(addEatenFood('Apple', 'invalid-date')).rejects.toThrow('Bad Request');
 	expect(globalThis.fetch).toHaveBeenCalledWith(
 		'http://localhost:5000/add_food',
+		expect.any(Object)
+	);
+});
+
+test('updateEatenFood sends the correct request', async () => {
+	mockFetch.mockResolvedValueOnce({ ok: true });
+
+	await updateEatenFood(1, 'Apple', '2024-10-17');
+	expect(globalThis.fetch).toHaveBeenCalledWith(
+		'http://localhost:5000/update_food_by_id',
+		expect.objectContaining({
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ id: 1, food_name: 'Apple', eaten_date: '2024-10-17' })
+		})
+	);
+});
+
+test('updateEatenFood handles server errors', async () => {
+	mockFetch.mockResolvedValueOnce({
+		ok: false,
+		status: 404,
+		json: async () => ({ message: 'Food not found' })
+	});
+
+	await expect(updateEatenFood(999, 'Apple', '2024-10-17')).rejects.toThrow('Food not found');
+	expect(globalThis.fetch).toHaveBeenCalledWith(
+		'http://localhost:5000/update_food_by_id',
 		expect.any(Object)
 	);
 });

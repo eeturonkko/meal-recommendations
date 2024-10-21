@@ -52,6 +52,21 @@ export async function addEatenFood(food: string, date: string): Promise<void> {
 	}
 }
 
+export async function updateEatenFood(id: number, food: string, date: string): Promise<void> {
+  const res = await fetch('http://localhost:5000/update_food_by_id', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id, food_name: food, eaten_date: date })
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Failed to update eaten food');
+  }
+}
+
 export async function deleteEatenFood(id: number): Promise<void> {
 	const res = await fetch('http://localhost:5000/delete_food_by_id', {
 		method: 'DELETE',

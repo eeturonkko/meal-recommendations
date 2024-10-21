@@ -57,6 +57,29 @@ def add_food():
     conn.close()
     return jsonify({"message": "Food entry added successfully"}), 201
 
+@app.route("/update_food_by_id", methods=["PUT"])
+def update_food_by_id():
+    data = request.get_json()
+    food_id = data.get("id")
+    food_name = data.get("food_name")
+    eaten_date = data.get("eaten_date")
+
+    if not food_id or not food_name or not eaten_date:
+        return jsonify({"error": "Missing id, food_name or eaten_date"}), 400
+
+    try:
+        datetime.strptime(eaten_date, "%Y-%m-%d")
+    except ValueError:
+        return jsonify({"error": "Incorrect date format, should be YYYY-MM-DD"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE foods SET food_name=?, eaten_date=? WHERE id=?",
+                   (food_name, eaten_date, food_id))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Food entry updated successfully"}), 200
+
 @app.route("/recommend_foods", methods=["GET"])
 def recommend_foods():
     conn = get_db_connection()
